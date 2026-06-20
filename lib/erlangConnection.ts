@@ -25,7 +25,7 @@ export abstract class ErlangConnection extends EventEmitter {
     protected events_receiver: http.Server;
     _output: ILogOutput;
     verbose: boolean;
-
+    erlPath: string;
 
     public get isConnected(): boolean {
         return this.erlangbridgePort > 0;
@@ -36,6 +36,7 @@ export abstract class ErlangConnection extends EventEmitter {
         this._output = output;
         this.erlangbridgePort = -1;
         this.verbose = true;
+        this.erlPath = '';
     }
 
     protected log(msg: string): void {
@@ -62,8 +63,9 @@ export abstract class ErlangConnection extends EventEmitter {
         }
     }
 
-    public async Start(verbose: boolean): Promise<number> {
+    public async Start(verbose: boolean, erlPath: string): Promise<number> {
         this.verbose = verbose;
+        this.erlPath = erlPath;
         return new Promise<number>((a, r) => {
             //this.debug("erlangConnection.Start");
             this.compile_erlang_connection().then(() => {
@@ -95,7 +97,7 @@ export abstract class ErlangConnection extends EventEmitter {
             }
 
             let args = ["-o", path.normalize(ebinDir)].concat(erlFiles);
-            return compiler.Compile(path.join(erlangBridgePath,'src'), args).then(res => {
+            return compiler.Compile(path.join(erlangBridgePath,'src'), args, this.erlPath).then(res => {
                 //this.debug("Compilation of erlang bridge...ok");
                 a(res);
             }, exitCode => {

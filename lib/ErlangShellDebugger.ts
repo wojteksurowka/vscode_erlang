@@ -247,11 +247,12 @@ export class ErlangShellForDebugging extends GenericShell {
     }
 
     /** compile specific files */
-    public Compile(startDir: string, args: string[]): Promise<number> {
+    public Compile(startDir: string, args: string[], erlPath: string): Promise<number> {
         //if erl is used, -compile must be used
         //var processArgs = ["-compile"].concat(args);
         var processArgs = [].concat(args);
-        var result = this.RunProcess("erlc", startDir, processArgs);
+        const erlc = erlPath ? path.join(erlPath, 'erlc') : 'erlc';
+        var result = this.RunProcess(erlc, startDir, processArgs);
         return result;
     }
 
