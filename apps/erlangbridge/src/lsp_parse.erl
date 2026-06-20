@@ -1,5 +1,6 @@
 -module(lsp_parse).
 -export([parse_source_file/2, parse_config_file/2, get_include_path/1, get_include_path_no_build/1, scan_source_file/2]).
+-compile(nowarn_deprecated_catch).
 
 %% @doc
 %% @param File is a reference to the real file (file opened by editor)
