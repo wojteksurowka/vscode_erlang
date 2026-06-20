@@ -91,7 +91,7 @@ export abstract class ErlangConnection extends EventEmitter {
             //create dir if not exists
             //compile erlang_connection in specifc diretory to avoid that the target can access to lspxxx.beam at debug time            
             if (!fs.existsSync(ebinDir)) {
-                fs.mkdirSync(ebinDir);
+                fs.mkdirSync(ebinDir, {recursive: true});
             }
 
             let args = ["-o", path.normalize(ebinDir)].concat(erlFiles);
