@@ -32,10 +32,13 @@ export default class RebarShell extends GenericShell {
      * @param commands - Arguments to rebar
      * @returns Promise resolved or rejected when rebar exits
      */
-    public async runScript(cwd: string, commands: string[]): Promise<RebarShellResult> {
+    public async runScript(cwd: string, commands: string[], erlPath: string): Promise<RebarShellResult> {
         // Rebar may not have execution permission (e.g. if extension is built
         // on Windows but installed on Linux). Let's always run rebar by escript.
         let escript = (process.platform == 'win32' ? 'escript.exe' : 'escript');
+        if (erlPath !== '') {
+            escript = path.join(erlPath, escript);
+        }
         let rebarFileName = await this.getRebarFullPath();
         if (rebarFileName.search(' ') > -1) {
             // There is at least one space in rebarPath. Use double quotes

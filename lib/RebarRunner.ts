@@ -215,7 +215,7 @@ export class RebarRunner implements vscode.Disposable {
 	public async runScript(commands: string[]): Promise<string> {
 		const rootPath = getElangConfigConfiguration().rootPath;
 		const { output } = await new RebarShell(this.getRebarSearchPaths(), this.extensionPath, ErlangOutputAdapter(RebarRunner.RebarOutput))
-			.runScript(rootPath, commands);
+			.runScript(rootPath, commands, getElangConfigConfiguration().erlangPath);
 		return output;
 	}
 
