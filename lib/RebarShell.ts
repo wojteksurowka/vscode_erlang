@@ -21,8 +21,8 @@ export default class RebarShell extends GenericShell {
      * @param cwd - The working directory where compilation will take place
      * @returns Promise resolved or rejected when rebar exits
      */
-    public compile(cwd: string) : Promise<RebarShellResult> {
-        return this.runScript(cwd, ['compile']);
+    public compile(cwd: string, erlPath: string) : Promise<RebarShellResult> {
+        return this.runScript(cwd, ['compile'], erlPath);
     }
 
     /**

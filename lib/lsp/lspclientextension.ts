@@ -184,7 +184,7 @@ function waitForSocket(options: any, callback: any, _tries: any) {
 // TODO: convert to async function
 function compileErlangBridge(extensionPath: string): Thenable<string> {
 	return new RebarShell([getElangConfigConfiguration().rebarPath], extensionPath, ErlangOutputAdapter())
-		.compile(extensionPath)
+		.compile(extensionPath, getElangConfigConfiguration().erlangPath)
 		.then(({ output }) => output);
 	// TODO: handle failure to compile erlangbridge
 }
